@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <script type="text/javascript" src="lib/dat.gui.min.js"></script>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            background-color: #333333;
+            margin: 0;
+            overflow: hidden;
+        }
+        #container {
+            width: 1003px;
+            margin-top: 50px;
+            margin-left: -501px;
+            left: 50%;
+            position: absolute;
+        }
+        #testCanvas {
+            background: #000000;
+        }
+        #img-path {
+            display: none;
+        }
+    </style>
+    <title>Editor</title>
+</head>
+<body>
+    <input id="img-path" type="file" />
+    <div id="container">
+        <canvas id="testCanvas"></canvas>
+    </div>
+    <script src="lib/stats.min.js"></script>
+    <script src="lib/proton-1.0.0.js"></script>
+    <script src="lib/createjs-2015.11.26.min.js"></script>
+    <script src="./protonEmitterDemo.js"></script>
+    <script src="./main.js"></script>
+    <script src="./gui.js"></script>
+
+    <script src="templates/Fireworks.js"></script>
+
+
+</body>
+</html>
