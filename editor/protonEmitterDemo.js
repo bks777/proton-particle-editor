@@ -45,22 +45,22 @@ function initEmitter(emitter){
     emitter.rate = new Proton.Rate(new Proton.Span(5, 30), new Proton.Span(.2, .5));
     emitter.addInitialize(new Proton.Mass(1));
     emitter.addInitialize(new Proton.ImageTarget(bitmap));
-    emitter.addInitialize(new Proton.Life(0, 1));
+    emitter.addInitialize(new Proton.Life(0, 10));
     emitter.addInitialize(new Proton.Velocity(new Proton.Span(3, 9), new Proton.Span(0, 30, true), 'polar'));
 
     /*Behaiviors*/
-    // emitter.addBehaviour(CONFIG.alpha);
-    // emitter.addBehaviour(CONFIG.attraction);
+     emitter.addBehaviour(CONFIG.alpha);
+     emitter.addBehaviour(CONFIG.attraction);
     //Collision
     //Color
     //CrossZone
     //Force
-    // emitter.addBehaviour(CONFIG.gravity);
+     emitter.addBehaviour(CONFIG.gravity);
     //GravityWell
-    // emitter.addBehaviour(new Proton.RandomDrift(30, 30, .05));
+     emitter.addBehaviour(new Proton.RandomDrift(30, 30, .05));
     //Repulsion
-    // emitter.addBehaviour(new Proton.Rotate(0, Proton.getSpan(-8, 9), 'add'));
-    // emitter.addBehaviour(new Proton.Scale(new Proton.Span(1, 3), 0.3));
+     emitter.addBehaviour(new Proton.Rotate(0, Proton.getSpan(-8, 9), 'add'));
+     emitter.addBehaviour(new Proton.Scale(new Proton.Span(1, 3), 0.3));
 
     emitter.p.x = 300;
     emitter.p.y = 300;

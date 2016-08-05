@@ -139,8 +139,21 @@ function getParamsObject() {
         i = 0,
         j,
         maxP = params.length;
+
+    console.log(object);
+
+    var data = {
+        "initializes": object["initializes"],
+        "behaviours": object["behaviours"]
+    };
+
+    var _data = new Export(data);
+    console.log(_data.execute());
+    return ;//_data.execute();
+
+
     for (i; i < maxP; i++) {
-        paramObj[params[i]] = [];
+        paramObj[params[i]] = {};
         for (j = 0; j < object[params[i]].length; j++) {
             paramObj[params[i]].push(object[params[i]][j]);
         }
