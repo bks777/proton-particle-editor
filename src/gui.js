@@ -46,6 +46,16 @@ var BEH_RANGES = {
         min: -60,
         max: 60,
         step: 1
+    },
+    "Velocity": {
+        min: -50,
+        max: 50,
+        step:1
+    },
+    "Life": {
+        min: 0,
+        max: 5,
+        step: .1
     }
 };
 
@@ -64,14 +74,60 @@ proton.emitters[0].initializes.forEach(
                 .step(BEH_RANGES[name].step);
         }
 
+        if (name === 'Velocity') {
+            guiElement.addFolder(folderName);
+            //rPan
+            guiElement.addToFolder(folderName,
+                "verticalPan:", beh.rPan.a, BEH_RANGES[name].min, BEH_RANGES[name].max)
+                .onChange( function(value){ beh.rPan.a = value; })
+                .step(BEH_RANGES[name].step);
+            //thaPan
+            guiElement.addToFolder(folderName,
+                "hrzntlPan: Min", beh.thaPan.a, BEH_RANGES[name].min, BEH_RANGES[name].max)
+                .onChange( function(value){ beh.thaPan.a = value; })
+                .step(BEH_RANGES[name].step);
+            guiElement.addToFolder(folderName,
+                "hrzntlPan: Max", beh.thaPan.b, BEH_RANGES[name].min, BEH_RANGES[name].max)
+                .onChange( function(value){ beh.thaPan.b = value; })
+                .step(BEH_RANGES[name].step);
+        }
+
+        if (name === 'Life') {
+            guiElement.addFolder(folderName);
+
+            guiElement.addToFolder(folderName,
+                "Min Life: ", beh.lifePan.a, BEH_RANGES[name].min, BEH_RANGES[name].max)
+                .onChange( function(value){ beh.lifePan.a = value; })
+                .step(BEH_RANGES[name].step);
+            guiElement.addToFolder(folderName,
+                "Max Life: ", beh.lifePan.b, BEH_RANGES[name].min, BEH_RANGES[name].max)
+                .onChange( function(value){ beh.lifePan.b = value; })
+                .step(BEH_RANGES[name].step);
+        }
+
         if (["Scale", "Alpha", "Rotate"].indexOf(name) !== -1) {
             guiElement.addToFolder(folderName, "From: Min", beh.a.a, BEH_RANGES[name].min, BEH_RANGES[name].max)
                 .onChange( function(value){ beh.a.a = value; })
                 .step(BEH_RANGES[name].step);
         }
+
     }
 );
 
+guiElement.addFolder('SPAWN');
+
+guiElement.addToFolder('SPAWN', "Prtcl/Spwn:Min", proton.emitters[0].rate.numPan.a, 0, 1000)
+    .onChange(function(value){ proton.emitters[0].rate.numPan.a = value;})
+    .step(1);
+guiElement.addToFolder('SPAWN', "Prtcl/Spwn:Max", proton.emitters[0].rate.numPan.b, 0, 3000)
+    .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
+    .step(1);
+guiElement.addToFolder('SPAWN', "Spawn time: Min", proton.emitters[0].rate.timePan.a, 0, 10)
+    .onChange(function(value){ proton.emitters[0].rate.numPan.a = value;})
+    .step(0.1);
+guiElement.addToFolder('SPAWN', "Spawn time: Max", proton.emitters[0].rate.timePan.b, 0, 10)
+    .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
+    .step(0.1);
 
 proton.emitters[0].behaviours.forEach(
     function (beh) {
@@ -199,18 +255,5 @@ guiElement.addToFolder('Basic', 'On/Off', function () {
 
 });
 
-guiElement.addFolder('SPAWN');
 
-guiElement.addToFolder('SPAWN', "Prtcl/Spwn:Min", proton.emitters[0].rate.numPan.a, 0, 1000)
-    .onChange(function(value){ proton.emitters[0].rate.numPan.a = value;})
-    .step(1);
-guiElement.addToFolder('SPAWN', "Prtcl/Spwn:Max", proton.emitters[0].rate.numPan.b, 0, 3000)
-    .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
-    .step(1);
-guiElement.addToFolder('SPAWN', "Spawn time: Min", proton.emitters[0].rate.timePan.a, 0, 10)
-    .onChange(function(value){ proton.emitters[0].rate.numPan.a = value;})
-    .step(0.1);
-guiElement.addToFolder('SPAWN', "Spawn time: Max", proton.emitters[0].rate.timePan.b, 0, 10)
-    .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
-    .step(0.1);
 
