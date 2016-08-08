@@ -194,15 +194,22 @@ function getParamsObject() {
         paramObj = {},
         i = 0,
         j,
-        maxP = params.length;
-    for (i; i < maxP; i++) {
-        paramObj[params[i]] = [];
-        for (j = 0; j < object[params[i]].length; j++) {
-            paramObj[params[i]].push(object[params[i]][j]);
-        }
-    }
+        maxP = params.length,
+        data = {
+            "initializes": object["initializes"],
+            "behaviours": object["behaviours"]
+        },
+        _data = new Export(data);
+    console.info(_data.execute());
 
-    console.info(paramObj);
+    // for (i; i < maxP; i++) {
+    //     paramObj[params[i]] = {};
+    //     for (j = 0; j < object[params[i]].length; j++) {
+    //         paramObj[params[i]].push(object[params[i]][j]);
+    //     }
+    // }
+    //
+    // console.info(paramObj);
 }
 
 // guiElement.config['Image Path'] = 'minion.png';
