@@ -7,24 +7,38 @@ var Import = function(_data){
 
     this._data = _data;
 
-    this._keysExport = ['initializes', 'behaviours'];
+    var model = new ModelExport();
 
-    this._modelsOfProperties = {
+    /**
+     * Get model
+     * @returns {{initializes: *[], behaviours: *[], rate: {Rate: string[]}}}
+     * @private
+     */
+    this.getModel = function () {
+        return model.getModel();
+    };
 
-        "initializes": {
-            "Mass": ["massPan"],
-            "ImageTarget": ["w","h"],
-            "Life": ["lifePan"],
-            "Velocity": ["rPan", "thaPan", "type"]
-        },
-        "behaviours": {
-            "Alpha":  ["id", "age", "energy", "dead","same", "a", "b"],
-            "Attraction": [ "energy", "dead","targetPosition", "radius", "force", "radiusSq", "attractionForce", "lengthSq"],
-            "Gravity": ["force"],
-            "RandomDrift": ["id", "age", "energy", "dead", "panFoce", "delay", "time"],
-            "Rotate":  ["a", "b"],
-            "Scale": [ "a", "b"]
+    this._findModel = function (type, nameClass) {
+
+        var _typeModels = this.getModel()[type];
+
+        if(_typeModels instanceof Array){
+
+            for(var i = 0, l = _typeModels.length; i < l; i++){
+                var el = _typeModels[i];
+
+                if(Object.keys(el).indexOf(nameClass) != -1){
+                    return el[nameClass];
+                }
+            }
+
+            return null;
         }
+
+        if(_typeModels instanceof Object){console.log(nameClass);
+            return _typeModels[nameClass];
+        }
+
     };
 
     /**
@@ -33,10 +47,10 @@ var Import = function(_data){
      */
     this._setObjects = function () {
 
-        var _objects = {};
+        var keys = Object.keys(this.getModel());
 
-        for(var i = 0, l = this._keysExport.length; i < l; i++){
-            this._importModule(this._data[ this._keysExport[i] ], this._keysExport[i]);
+        for(var i = 0, l = keys.length; i < l; i++){
+            this._importModule(this._data[ keys[i] ], keys[i]);
         }
     };
 
@@ -51,14 +65,13 @@ var Import = function(_data){
         var key;
 
         for(key in list){
-
             var object = this._findClassInArray(type, key);
 
             if(object == null){
                 new Error("Not found Class in emitter", type, key);
             }
 
-            var model = this._modelsOfProperties[type][key];
+            var model = this._findModel(type, key);
 
             this.setupProperties(object, model, list[key]);
         }
@@ -68,19 +81,23 @@ var Import = function(_data){
      * Find index of class by class name and type
      * @param type
      * @param className
-     * @returns {object|null}
+     * @returns {null}
      * @private
      */
     this._findClassInArray = function (type, className) {
 
         var list = emitter[type];
 
-        var instance = Proton[className];
+        if(this.getModel()[type] instanceof Array){
+            var instance = Proton[className];
 
-        for(var i = 0, l = list.length; i < l; i++){
-            if(list[i] instanceof instance){
-                return list[i];
+            for(var i = 0, l = list.length; i < l; i++){
+                if(list[i] instanceof instance){
+                    return list[i];
+                }
             }
+        } else {
+            return list
         }
 
         return null;
@@ -114,6 +131,14 @@ var Import = function(_data){
     };
 
     /**
+     * update gui
+     */
+    this.updateGUI = function () {
+
+
+    };
+
+    /**
      * Execute extractor
      */
     this.execute = function () {
@@ -122,6 +147,7 @@ var Import = function(_data){
             this._data = JSON.parse(this._data);
             this._setObjects();
 
+            this.updateGUI();
         } catch(e){
             console.error(e);
         }

@@ -2,24 +2,17 @@ var Export = function (_data) {
 
     this._data = _data;
 
-    this._keysExport = ['initializes', 'behaviours'];
+    var model = new ModelExport();
 
-    this._modelsOfProperties = {
+    this._modelsOfProperties = {};
 
-        "initializes": {
-            "Mass": ["massPan"],
-            "ImageTarget": ["w","h"],
-            "Life": ["lifePan"],
-            "Velocity": ["rPan", "thaPan", "type"]
-        },
-        "behaviours": {
-            "Alpha":  ["id", "age", "energy", "dead","same", "a", "b"],
-            "Attraction": [ "energy", "dead","targetPosition", "radius", "force", "radiusSq", "attractionForce", "lengthSq"],
-            "Gravity": ["force"],
-            "RandomDrift": ["id", "age", "energy", "dead", "panFoce", "delay", "time"],
-            "Rotate":  ["a", "b"],
-            "Scale": [ "a", "b"]
-        }
+    /**
+     * Get model
+     * @returns {{initializes: *[], behaviours: *[], rate: {Rate: string[]}}}
+     * @private
+     */
+    this.getModel = function () {
+        return model.getModel();
     };
 
     /**
@@ -31,8 +24,10 @@ var Export = function (_data) {
 
         var _objects = {};
 
-        for(var i = 0, l = this._keysExport.length; i < l; i++){
-            _objects[ this._keysExport[i] ] = this._exportModule(this._data[ this._keysExport[i] ], this._keysExport[i]);
+        var _keys = Object.keys(this.getModel());
+
+        for(var i = 0, l = _keys.length; i < l; i++){
+            _objects[ _keys[i] ] = this._exportModule(this._data[ _keys[i] ], _keys[i]);
         }
 
         return _objects;
@@ -49,13 +44,43 @@ var Export = function (_data) {
 
         var _object = {};
 
-        for(var i = 0, l = list.length; i < l; i++){
-            var el = list[i];
+        if(list instanceof Array){
 
-            _object[el.constructor.name] = this.clearProperties(list[i], type, el.constructor.name);
+            for(var i = 0, l = list.length; i < l; i++){
+                var el = list[i];
+
+                _object[el.constructor.name] = this.clearProperties(list[i], type, el.constructor.name);
+            }
+        } else if(list instanceof Object){
+
+            var name = Object.keys(this.getModel()[type])[0];
+            _object[name] = this.clearProperties(list, type, name)
         }
 
         return _object;
+    };
+
+    this._findModel = function (type, nameClass) {
+
+        var _typeModels = this.getModel()[type];
+
+        if(_typeModels instanceof Array){
+
+            for(var i = 0, l = _typeModels.length; i < l; i++){
+                var el = _typeModels[i];
+
+                if(Object.keys(el).indexOf(nameClass) != -1){
+                    return el[nameClass];
+                }
+            }
+
+            return null;
+        }
+
+        if(_typeModels instanceof Object){console.log(nameClass);
+            return _typeModels[nameClass];
+        }
+
     };
 
     /**
@@ -67,7 +92,7 @@ var Export = function (_data) {
      */
     this.clearProperties = function (object, type, nameClass) {
 
-        var model = this._modelsOfProperties[type][nameClass];
+        var model = this._findModel(type, nameClass);
 
         var _object = {};
 
@@ -82,10 +107,7 @@ var Export = function (_data) {
      * Execute extractor
      */
     this.execute = function () {
-
-        var _data = this._getObjects();
-
-        return JSON.stringify(_data);
+        return JSON.stringify(this._getObjects());
     };
 
 };
