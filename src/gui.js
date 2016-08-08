@@ -25,7 +25,7 @@ var BEH_RANGES = {
     "Scale" : {
         min: 0,
         max: 10,
-        step: 1
+        step: .1
     },
     "Alpha" : {
         min: 0.0,
@@ -124,10 +124,10 @@ guiElement.addToFolder('SPAWN', "Prtcl/Spwn:Max", proton.emitters[0].rate.numPan
     .step(1);
 guiElement.addToFolder('SPAWN', "Spawn time: Min", proton.emitters[0].rate.timePan.a, 0, 10)
     .onChange(function(value){ proton.emitters[0].rate.numPan.a = value;})
-    .step(0.1);
+    .step(0.01);
 guiElement.addToFolder('SPAWN', "Spawn time: Max", proton.emitters[0].rate.timePan.b, 0, 10)
     .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
-    .step(0.1);
+    .step(0.01);
 
 proton.emitters[0].behaviours.forEach(
     function (beh) {
@@ -173,15 +173,26 @@ proton.emitters[0].behaviours.forEach(
         }
 
         if (name === "RandomDrift") {
-            guiElement.addToFolder(folderName, "Drift X", beh.panFoce.x*0.01, -250, 250)
-                .onChange(function(value){ beh.panFoce.x = value*100;});
+            guiElement.addToFolder(folderName, "Drift X", beh.panFoce.x * 0.01, -250, 250)
+                .onChange(function(value){ beh.panFoce.x = value * 100;});
 
-            guiElement.addToFolder(folderName, "Drift Y", beh.panFoce.y*0.01, -250, 250)
-                .onChange(function(value){ beh.panFoce.y = value*100;});
+            guiElement.addToFolder(folderName, "Drift Y", beh.panFoce.y * 0.01, -250, 250)
+                .onChange(function(value){ beh.panFoce.y = value * 100;});
 
             guiElement.addToFolder(folderName, "Delay", beh.delay, 0, 500)
                 .onChange(function(value){beh.delay = value;});
+        }
 
+        if (name === "Color") {
+            // console.info(beh);
+            // guiElement.addToFolder(folderName, "Color1", beh.delay, 0, 500)
+            //     .onChange(function(value){beh.delay = value;});
+        }
+
+        if (name === "CrossZone") {
+            // console.info(beh);
+            // guiElement.addToFolder(folderName, "Color1", beh.delay, 0, 500)
+            //     .onChange(function(value){beh.delay = value;});
         }
     }
 );
@@ -225,7 +236,7 @@ guiElement.config['Upload Image'] = function () {
         reader.onload = (function() {
             return function(e) {
                 proton.emitters[0].initializes[1].image.colorArr[0] =
-                    (new createjs.Bitmap(e.target.result));
+                    (new createjs.Bitmap(e.target.result)); //@TODO images changed here!
             };
         })(file);
 

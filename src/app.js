@@ -129,8 +129,18 @@ function initEmitter(emitter){
     emitter.addBehaviour(CONFIG.alpha);
     emitter.addBehaviour(CONFIG.attraction);
     //Collision
+    // emitter.addBehaviour(new Proton.Collision())
     //Color
+    // emitter.addBehaviour(new Proton.Color(
+    //    'random' //@TODO inspect
+    // ));
     //CrossZone
+    // emitter.addBehaviour(new Proton.CrossZone(new Proton.RectZone( //@TODO inspect
+    //     0,
+    //     0,
+    //     canvas.width,
+    //     canvas.height
+    // ), 'death'));
     //Force
     emitter.addBehaviour(CONFIG.gravity);
     //GravityWell
@@ -176,9 +186,9 @@ function createProton() {
     renderer.start();
 }
 
-function tick() {
+function tick(evt) {
     stats.begin();
     proton.update();
-    stage.update();
+    stage.update(evt);
     stats.end();
 }
