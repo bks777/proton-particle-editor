@@ -157,7 +157,6 @@ guiElement.config['Upload Image'] = function () {
         if (!file.type.match('image.*')) {
             return;
         }
-        // guiElement.config.Basic._folderHandler.__ul.childNodes[1].firstChild.childNodes[1].innerHtml = file.name;
         var reader = new FileReader();
 
         reader.onload = (function() {
