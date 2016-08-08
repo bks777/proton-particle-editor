@@ -197,32 +197,29 @@ proton.emitters[0].behaviours.forEach(
     }
 );
 
+guiElement.add('IMPORT!', setParamsObject);
 guiElement.add('EXTRACT!', getParamsObject);
 
+/**
+ * Import object properties
+ */
+function setParamsObject(){
+
+    var props = prompt("Enter JSON");
+
+    console.log(props);
+    var _import = new Import(props);
+    _import.execute();
+
+}
+
+/**
+ * Export object properties
+ */
 function getParamsObject() {
-    var object = emitter,
-        params = ['initializes', 'behaviours'],
-        paramObj = {},
-        i = 0,
-        j,
-        maxP = params.length,
-        data = {
-            "initializes": object["initializes"],
-            "behaviours": object["behaviours"]
-        },
-        _data = new Export(emitter);
 
+    var _data = new Export(emitter);
     console.log(">>>> EXPORT PROTON\n" + _data.execute() + "\n>>>> EXPORT PROTON");
-    return ;
-
-    for (i; i < maxP; i++) {
-        paramObj[params[i]] = [];
-        for (j = 0; j < object[params[i]].length; j++) {
-            paramObj[params[i]].push(object[params[i]][j]);
-        }
-    }
-
-    console.info(paramObj);
 }
 
 // guiElement.config['Image Path'] = 'minion.png';

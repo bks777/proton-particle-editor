@@ -13,7 +13,7 @@ var Export = function (_data) {
             "Velocity": ["rPan", "thaPan", "type"]
         },
         "behaviours": {
-            "Alpha":  ["id", "age", "energy", "dead", "name", "same", "a", "b"],
+            "Alpha":  ["id", "age", "energy", "dead","same", "a", "b"],
             "Attraction": [ "energy", "dead","targetPosition", "radius", "force", "radiusSq", "attractionForce", "lengthSq"],
             "Gravity": ["force"],
             "RandomDrift": ["id", "age", "energy", "dead", "panFoce", "delay", "time"],
