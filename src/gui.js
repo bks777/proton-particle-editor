@@ -210,8 +210,10 @@ function getParamsObject() {
             "initializes": object["initializes"],
             "behaviours": object["behaviours"]
         },
-        _data = new Export(data);
-    // console.info(_data.execute());
+        _data = new Export(emitter);
+
+    console.log(">>>> EXPORT PROTON\n" + _data.execute() + "\n>>>> EXPORT PROTON");
+    return ;
 
     for (i; i < maxP; i++) {
         paramObj[params[i]] = [];
