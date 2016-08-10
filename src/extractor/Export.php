@@ -21,10 +21,10 @@ class Export
         $this->name = $name;
         $this->json = $json;
 
-        echo $this->path = dirname(__DIR__) . "/saved/";
+        $this->path = dirname(__DIR__) . "/saved/";
     }
 
-    public function execute(){print_r($this);
+    public function execute(){
         file_put_contents($this->path . sprintf($this->template, $this->name), $this->json);
     }
 
