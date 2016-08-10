@@ -14,12 +14,12 @@ var canvas,
     gravity : new Proton.Gravity(0),
     rate: {
         timePan: {
-            from: 1,
-            to: 1
+            from: .01,
+            to: 10
         },
         numPan: {
-            from: 0.1,
-            to: 0.1
+            from: 1,
+            to: 1
         }
     },
     mass: 1,

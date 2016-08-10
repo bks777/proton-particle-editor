@@ -47,8 +47,8 @@ var BEH_RANGES = {
         step: 1
     },
     "Velocity": {
-        min: -50,
-        max: 50,
+        min: -180,
+        max: 180,
         step:1
     },
     "Life": {
@@ -122,11 +122,11 @@ guiElement.addToFolder('SPAWN', "Prtcl/Spwn:Max", proton.emitters[0].rate.numPan
     .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
     .step(1);
 guiElement.addToFolder('SPAWN', "Spawn time: Min", proton.emitters[0].rate.timePan.a, 0, 10)
-    .onChange(function(value){ proton.emitters[0].rate.numPan.a = value;})
-    .step(0.01);
+    .onChange(function(value){ proton.emitters[0].rate.timePan.a = value;})
+    .step(0.1);
 guiElement.addToFolder('SPAWN', "Spawn time: Max", proton.emitters[0].rate.timePan.b, 0, 10)
-    .onChange(function(value){ proton.emitters[0].rate.numPan.b = value;})
-    .step(0.01);
+    .onChange(function(value){ proton.emitters[0].rate.timePan.b = value;})
+    .step(0.1);
 
 proton.emitters[0].behaviours.forEach(
     function (beh) {
@@ -158,28 +158,33 @@ proton.emitters[0].behaviours.forEach(
         }
 
         if (name === "Attraction") {
-            guiElement.addToFolder(folderName, "Attraction X", beh.targetPosition.x)
-                .onChange(function(value){beh.targetPosition.x = value;});
+            guiElement.addToFolder(folderName, "Attraction X", beh.targetPosition.x, -500, 500)
+                .onChange(function(value){beh.targetPosition.x = value;})
+                .step(10);
 
-            guiElement.addToFolder(folderName, "Attraction Y", beh.targetPosition.y)
-                .onChange(function(value){beh.targetPosition.y = value;});
+            guiElement.addToFolder(folderName, "Attraction Y", beh.targetPosition.y, -500, 500)
+                .onChange(function(value){beh.targetPosition.y = value;})
+                .step(10);
 
             guiElement.addToFolder(folderName, "Attraction Force", beh.force, 0, 500)
-                .onChange(function(value){beh.reset(beh.targetPosition, value, beh.radius);});
+                .onChange(function(value){beh.reset(beh.targetPosition, value, beh.radius);})
+                .step(10);
 
-            guiElement.addToFolder(folderName, "Attraction Radius", beh.radius)
-                .onChange(function(value){beh.radius = value;});
+            guiElement.addToFolder(folderName, "Attraction Radius", beh.radius, 1, 500)
+                .onChange(function(value){beh.radius = value;})
+                .step(1);
         }
 
         if (name === "RandomDrift") {
-            guiElement.addToFolder(folderName, "Drift X", beh.panFoce.x * 0.01, -250, 250)
+            guiElement.addToFolder(folderName, "Drift X", beh.panFoce.x * 0.01, -180, 180)
                 .onChange(function(value){ beh.panFoce.x = value * 100;});
 
-            guiElement.addToFolder(folderName, "Drift Y", beh.panFoce.y * 0.01, -250, 250)
+            guiElement.addToFolder(folderName, "Drift Y", beh.panFoce.y * 0.01, -180, 180)
                 .onChange(function(value){ beh.panFoce.y = value * 100;});
 
-            guiElement.addToFolder(folderName, "Delay", beh.delay, 0, 500)
-                .onChange(function(value){beh.delay = value;});
+            guiElement.addToFolder(folderName, "Delay", beh.delay, 0, 5)
+                .onChange(function(value){beh.delay = value;})
+                .step(0.01);
         }
 
         if (name === "Color") {
@@ -246,7 +251,6 @@ guiElement.config['Upload Image'] = function () {
                 var sprite = new createjs.Sprite (spriteSheet);
 
                 sprite.gotoAndStop("source");
-                // sprite.framerate = 10;
                 sprite.currentAnimationFrame = Math.floor(Math.random() * spriteSheet._frames.length - 1);
                 sprite.play();
 
