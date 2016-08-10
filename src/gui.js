@@ -47,13 +47,13 @@ var BEH_RANGES = {
         step: 1
     },
     "Velocity": {
-        min: -180,
-        max: 180,
+        min: -360,
+        max: 360,
         step:1
     },
     "Life": {
         min: 0,
-        max: 5,
+        max: 20,
         step: .1
     }
 };

@@ -150,7 +150,7 @@ var Import = function(){
 
         var body = 'name=' + encodeURIComponent(name);
 
-        xhr.open("POST", './extractor/import.php', true);
+        xhr.open("POST", './extractor/Import.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         xhr.onreadystatechange = function () {
