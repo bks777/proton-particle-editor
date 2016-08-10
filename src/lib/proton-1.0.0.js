@@ -1754,6 +1754,9 @@
 			}
 		} else {
 			particle.target = imagetarget;
+			particle.target.gotoAndStop("source");
+			particle.target.currentAnimationFrame = Math.floor(Math.random() * particle.target.spriteSheet._frames.length - 1);
+			particle.target.play();
 		}
 	};
 
@@ -1763,7 +1766,7 @@
 		} else {
 			return new Proton.ColorSpan(color);
 		}
-	}
+	};
 
 	Proton.ImageTarget = ImageTarget;
 
