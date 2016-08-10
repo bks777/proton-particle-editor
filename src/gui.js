@@ -204,10 +204,7 @@ guiElement.add('EXTRACT!', getParamsObject);
  */
 function setParamsObject(){
 
-    var props = prompt("Enter JSON");
-
-    console.log(props);
-    var _import = new Import(props);
+    var _import = new Import();
     _import.execute();
 
 }

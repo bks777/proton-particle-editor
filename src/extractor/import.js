@@ -1,11 +1,10 @@
 /**
  * Import data from Proton
- * @param _data
  * @constructor
  */
-var Import = function(_data){
+var Import = function(){
 
-    this._data = _data;
+    this._data = {};
 
     var model = new ModelExport();
 
@@ -143,14 +142,38 @@ var Import = function(_data){
      */
     this.execute = function () {
 
-        try{
-            this._data = JSON.parse(this._data);
-            this._setObjects();
+        var name = prompt("Enter the name of import file:");
 
-            this.updateGUI();
-        } catch(e){
-            console.error(e);
-        }
-    };
+        var me = this;
 
+        var xhr = new XMLHttpRequest();
+
+        var body = 'name=' + encodeURIComponent(name);
+
+        xhr.open("POST", './extractor/import.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState != 4) return;
+
+            var $_json = JSON.parse(xhr.responseText);
+
+            if ($_json.error) {
+                alert($_json.error);
+            } else {
+
+                try {
+                    me._data = $_json.result;
+
+                    me._setObjects();
+
+                    me.updateGUI();
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        };
+
+        xhr.send(body);
+    }
 };

@@ -107,6 +107,26 @@ var Export = function (_data) {
      * Execute extractor
      */
     this.execute = function () {
+
+        var name = prompt("Enter the name of export file:");
+
+        var xhr = new XMLHttpRequest();
+
+        var body = 'name=' + encodeURIComponent(name) +
+            '&exportData=' + encodeURIComponent(JSON.stringify(this._getObjects()));
+
+        xhr.open("POST", './extractor/export.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState != 4) return;
+
+            alert("Saved!");
+        };
+
+        xhr.send(body);
+
+
         return JSON.stringify(this._getObjects());
     };
 
