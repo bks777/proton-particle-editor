@@ -77,8 +77,12 @@ proton.emitters[0].initializes.forEach(
             guiElement.addFolder(folderName);
             //rPan
             guiElement.addToFolder(folderName,
-                "verticalPan:", beh.rPan.a, BEH_RANGES[name].min, BEH_RANGES[name].max)
+                "verticalPan: Min", beh.rPan.a, 0, 10)
                 .onChange( function(value){ beh.rPan.a = value; })
+                .step(BEH_RANGES[name].step);
+            guiElement.addToFolder(folderName,
+                "verticalPan: Max", beh.rPan.b, 0, 10)
+                .onChange( function(value){ beh.rPan.b = value; })
                 .step(BEH_RANGES[name].step);
             //thaPan
             guiElement.addToFolder(folderName,
@@ -283,6 +287,10 @@ guiElement.addToFolder('Basic', 'Pause', function () {
     }
 
 });
+guiElement.addToFolder('Basic', 'Emitter X:', emitter.p.x)
+    .onChange(function(value){emitter.p.x = value;});
+guiElement.addToFolder('Basic', 'Emitter X:', emitter.p.y)
+    .onChange(function(value){emitter.p.y = value;});
 
 // guiElement.addToFolder('Basic', 'On/Off', function () {
 //     if (proton.firstInit === true){
