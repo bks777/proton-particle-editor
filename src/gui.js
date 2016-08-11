@@ -261,7 +261,7 @@ guiElement.config['Upload Image'] = function () {
 
 
                 proton.emitters[0].initializes[1].image.colorArr[0] = (sprite);
-                window._cs = sprite;
+                emitter._cs = sprite;
                 if (proton.firstInit === true){
                     createjs.Ticker.addEventListener("tick", tick);
                     proton.firstInit = false;
@@ -348,16 +348,13 @@ function uploadBack() {
 guiElement.addFolder('JSON');
 guiElement.addToFolder('JSON', 'Upload JSON', importJSONAnim);
 guiElement.addToFolder('JSON', 'Upload Image', guiElement.config['Upload Image']);
-window._cs = new createjs.SpriteSheet();
-guiElement.addToFolder('JSON', 'Pivot X', window._cs._regX, 0, window._cs.width)
-    .onChange(function(value){ window._cs.regX = value;})
+emitter._cs = new createjs.SpriteSheet();
+guiElement.addToFolder('JSON', 'Pivot X', emitter._cs._regX, 0, emitter._cs.width)
+    .onChange(function(value){ emitter._cs.regX = value;})
     .step(1);
-guiElement.addToFolder('JSON', 'Pivot Y', window._cs._regY, 0, window._cs.height)
-    .onChange(function(value){ window._cs.regY = value;})
+guiElement.addToFolder('JSON', 'Pivot Y', emitter._cs._regY, 0, emitter._cs.height)
+    .onChange(function(value){ emitter._cs.regY = value;})
     .step(1);
-guiElement.addToFolder('JSON', 'FrameRate', window._cs.framerate, 0, 60)
-    .onChange(function(value){ window._cs.framerate = value;})
+guiElement.addToFolder('JSON', 'FrameRate', emitter._cs.framerate, 0, 60)
+    .onChange(function(value){ emitter._cs.framerate = value;})
     .step(1);
-
-
-

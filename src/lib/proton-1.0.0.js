@@ -1754,7 +1754,7 @@
 			}
 		} else {
 			particle.target = imagetarget;
-			particle.target.gotoAndStop("source");
+			particle.target.gotoAndStop("BW_coin");
 			particle.target.currentAnimationFrame = Math.floor(Math.random() * particle.target.spriteSheet._frames.length - 1);
 			particle.target.play();
 		}
