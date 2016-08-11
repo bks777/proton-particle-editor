@@ -112,6 +112,7 @@ proton.emitters[0].initializes.forEach(
 
     }
 );
+guiElement.addToFolder('Basic', 'Upload BG', uploadBack);
 
 guiElement.addFolder('SPAWN');
 
@@ -257,6 +258,13 @@ guiElement.config['Upload Image'] = function () {
 
                 proton.emitters[0].initializes[1].image.colorArr[0] = (sprite);
                 window._cs = sprite;
+                if (proton.firstInit === true){
+                    createjs.Ticker.addEventListener("tick", tick);
+                    proton.firstInit = false;
+                    proton.isOn = true;
+                } else {
+                    proton.isOn = true;
+                }
             };
         })(file);
 
@@ -275,22 +283,59 @@ guiElement.addToFolder('Basic', 'Pause', function () {
     }
 
 });
-guiElement.addToFolder('Basic', 'On/Off', function () {
-    if (proton.firstInit === true){
-        createjs.Ticker.addEventListener("tick", tick);
-        proton.firstInit = false;
-        proton.isOn = true;
-    } else {
-        if(proton.isOn) {
-            emitter.stopEmit();
-            proton.isOn = false;
-        } else {
-            emitter.emit();
-            proton.isOn = true;
-        }
-    }
 
-});
+// guiElement.addToFolder('Basic', 'On/Off', function () {
+//     if (proton.firstInit === true){
+//         createjs.Ticker.addEventListener("tick", tick);
+//         proton.firstInit = false;
+//         proton.isOn = true;
+//     } else {
+//         if(proton.isOn) {
+//             emitter.stopEmit();
+//             proton.isOn = false;
+//         } else {
+//             emitter.emit();
+//             proton.isOn = true;
+//         }
+//     }
+//
+// });
+
+function uploadBack() {
+    var input = document.getElementById('back-path');
+    input.addEventListener('change', function() {
+        var file = input.files[0];
+        if (!file.type.match('image.*')) {
+            return;
+        }
+        var reader = new FileReader();
+
+        reader.onload = (function() {
+            return function(e) {
+                if (proton.firstInit === true){
+                    createjs.Ticker.addEventListener("tick", tick);
+                    proton.firstInit = false;
+                    proton.isOn = true;
+                } else {
+                    proton.isOn = true;
+                }
+                stage.removeChild(window.back);
+                window.back = new createjs.Bitmap(e.target.result);
+                stage.addChild(window.back);
+                var dimensions = window.back.getBounds();
+                emitter.p.x = dimensions.width / 2;
+                emitter.p.y = dimensions.height / 2;
+                canvas.width = dimensions.width;
+                canvas.height = dimensions.height;
+            };
+        })(file);
+
+        reader.readAsDataURL(file);
+    });
+    input.click();
+}
+
+
 
 guiElement.addFolder('JSON');
 guiElement.addToFolder('JSON', 'Upload JSON', importJSONAnim);
