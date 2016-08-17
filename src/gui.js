@@ -358,3 +358,15 @@ guiElement.addToFolder('JSON', 'Pivot Y', emitter._cs._regY, 0, emitter._cs.heig
 guiElement.addToFolder('JSON', 'FrameRate', emitter._cs.framerate, 0, 60)
     .onChange(function(value){ emitter._cs.framerate = value;})
     .step(1);
+
+/**
+ * Adding mouse move action
+ */
+stage.on("pressmove", function(evt) {
+        // evt.target.cursor = 'pointer';
+        emitter.p.x = evt.stageX;
+        emitter.p.y = evt.stageY;
+    });
+// stage.on("pressup", function(evt) {
+//         evt.target.cursor = 'arrow';
+//     });

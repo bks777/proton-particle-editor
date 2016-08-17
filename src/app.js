@@ -5,77 +5,83 @@ var canvas,
     bitmap,
     renderer,
     stats,
+    //Define config object
     CONFIG = {
-    attraction : new Proton.Attraction({
-        x : 0,
-        y : 0
-    }, 1, 200),
-    alpha : new Proton.Alpha(1, 1),
-    gravity : new Proton.Gravity(0),
-    rate: {
-        timePan: {
-            from: .01,
-            to: 10
+        width: 1000,
+        height: 610,
+        attraction : new Proton.Attraction({
+            x : 0,
+            y : 0
+        }, 1, 200),
+        alpha : new Proton.Alpha(1, 1),
+        gravity : new Proton.Gravity(0),
+        rate: {
+            timePan: {
+                from: .01,
+                to: 10
+            },
+            numPan: {
+                from: 1,
+                to: 1
+            }
         },
-        numPan: {
-            from: 1,
+        mass: 1,
+        life: {
+            from: 0,
             to: 1
+        },
+        velocity: {
+            rpan: {
+                from: 0,
+                to: 0
+            },
+            thapan: {
+                from: 0,
+                to: 0
+            },
+            type: 'polar' // there are only 'polar' and 'vector' at current moment
+        },
+        random: {
+            driftX: 0,
+            driftY: 0,
+            delay: 0.00
+        },
+        rotate: {
+            from: {
+                min: 0,
+                max: 0
+            },
+            to: {
+                min: 0,
+                max: 0
+            },
+            style: 'add'
+        },
+        scale: {
+            from: {
+                min: 1,
+                max: 1
+            },
+            to: {
+                min: 1,
+                max: 1
+            }
+        },
+        position: {
+            x: 500,
+            y: 305
         }
-    },
-    mass: 1,
-    life: {
-        from: 0,
-        to: 1
-    },
-    velocity: {
-        rpan: {
-            from: 0,
-            to: 0
-        },
-        thapan: {
-            from: 0,
-            to: 0
-        },
-        type: 'polar' // there are only 'polar' and 'vector' at current moment
-    },
-    random: {
-        driftX: 0,
-        driftY: 0,
-        delay: 0.00
-    },
-    rotate: {
-        from: {
-            min: 0,
-            max: 0
-        },
-        to: {
-            min: 0,
-            max: 0
-        },
-        style: 'add'
-    },
-    scale: {
-        from: {
-            min: 1,
-            max: 1
-        },
-        to: {
-            min: 1,
-            max: 1
-        }
-    },
-    position: {
-        x: 500,
-        y: 305
-    }
 };
 
+/**
+ * Init
+ */
 Main();
 
 function Main() {
     canvas = document.getElementById("testCanvas");
-    canvas.width = 1000;
-    canvas.height = 610;
+    canvas.width = CONFIG.width;
+    canvas.height = CONFIG.height;
     stage = new createjs.Stage(canvas);
     bitmap = new createjs.Bitmap('images/minion.png');
     addStats();
@@ -91,8 +97,8 @@ function addStats() {
     stats = new Stats();
     stats.setMode(2);
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '0px';
-    stats.domElement.style.top = '0px';
+    stats.domElement.style.left = '0';
+    stats.domElement.style.top = '0';
     document.getElementById('container').appendChild(stats.domElement);
 }
 
